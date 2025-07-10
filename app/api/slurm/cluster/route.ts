@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 import { env } from "process";
 
 export async function GET() {
-   const res = await fetch(
+  const res = await fetch(
     `http://${env.SLURM_SERVER}/slurmdb/${env.SLURM_API_VERSION}/clusters`,
     {
       headers: {
