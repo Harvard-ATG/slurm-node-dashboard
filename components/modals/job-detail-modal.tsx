@@ -19,8 +19,9 @@ const JobDetailModal: React.FC<JobDetailModalProps> = ({
   setOpen,
   searchID,
 }) => {
+  const baseURL = process.env.NEXT_PUBLIC_BASE_URL || "";
   const jobFetcher = () =>
-    fetch(`/api/slurm/job/${searchID}`, {
+    fetch(`${baseURL}/api/slurm/job/${searchID}`, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -32,7 +33,7 @@ const JobDetailModal: React.FC<JobDetailModalProps> = ({
     isLoading: jobIsLoading,
   } = useSWR<{
     jobs: RunningJob[];
-  }>(open ? `/api/slurm/job/${searchID}` : null, jobFetcher);
+  }>(open ? `${baseURL}/api/slurm/job/${searchID}` : null, jobFetcher);
 
   function convertUnixToHumanReadable(unixTimestamp: number) {
     const date = new Date(unixTimestamp * 1000);
@@ -191,7 +192,7 @@ const JobDetailModal: React.FC<JobDetailModalProps> = ({
           </div>
           <div>
             <p className="font-semibold">State</p>
-            <p>{job.job_state?.join(", ")}</p>
+            <p>{(Array.isArray(job.job_state) && job?.job_state) ? job.job_state.join(", ") : job.job_state ?? ""}</p>
           </div>
           <div>
             <p className="font-semibold">Start Time</p>
