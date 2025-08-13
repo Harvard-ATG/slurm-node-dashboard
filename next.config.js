@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     output: "standalone",
+    assetPrefix: process.env.BASE_PATH || '',
     images: {
         remotePatterns: [
             {
